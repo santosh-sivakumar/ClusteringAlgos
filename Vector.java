@@ -1,41 +1,45 @@
-import java.io.*;
 import java.util.*;
-import java.lang.Math; 
+import java.lang.Math;
 
 public class Vector {
 	
-	List<Double> numbers;
+		List<Double> numbers = new ArrayList<Double>();
+		String name;
 		
-	Vector (List<Double> numbers) {
-			
-		numbers = numbers;
-			
-	}
-		
-	public double distance(Vector vector2) { // returns distance between two vectors
-		
-		double squared_distance = 0;
-			
-		for (int index = 0; index < numbers.size(); index++) {
-			double difference = numbers.get(index) - vector2.numbers.get(index);
-			squared_distance += (difference * difference);
+		Vector (List<Double> numbers) {
+			this.numbers = numbers;
 		}
+		
+		public double magnitude() { 
+		// returns vector magnitude, calculated to be the square root of sum(coordinates^2)
+			double magnitude = 0.0;
+
+			for (int index = 0; index < numbers.size(); index++) {
+				magnitude += (numbers.get(index) * (numbers.get(index)));
+			}
 			
-		return Math.sqrt(squared_distance);	
-					
-	}
-	
-	public double magnitude() { // computes vector magnitude
-			
-		List<Double> origin_coordinates = new ArrayList<Double>();
-		for (int index = 0; index < numbers.size(); index++) {
-			origin_coordinates.add(0.0);
+			return Math.sqrt(magnitude);
 		}
+
+		public static double distance(Vector vector1, Vector vector2) throws RuntimeException { 
+		// returns distance between two Vectors of equal num dimensions
+			double squaredDistance = 0.0;
+
+			if (vector1.numbers.size() != vector2.numbers.size()) {
+				throw new RuntimeException();
+			}
 			
-		Vector origin = new Vector(origin_coordinates);
+			for (int index = 0; index < vector1.numbers.size(); index++) {
+				double difference = vector1.numbers.get(index) - vector2.numbers.get(index);
+				difference = difference * difference;
+				squaredDistance = squaredDistance + difference;
+			}
 			
-		return distance(origin);
-			
+			double distance = Math.sqrt(squaredDistance);	
+			return distance;
+		}
+
+
 	}
-}
+
 	
